@@ -40,9 +40,14 @@ public class Main {
         runTest("4. Large Queue", largeProcesses(100));
         runTest("5. Edge Case - Same Burst", List.of(
                 new Process("P1", 0, 3), new Process("P2", 0, 3), new Process("P3", 0, 3)));
-        runTest("6. Cancel Case", List.of(
-                new Process("P1", 0, 4), new Process("P2", 0, 2), new Process("P3", 0, 5)));
-        System.out.println("Cancel-case note: cancellation is demonstrated by removing P2 before scheduling; the scheduler itself remains focused on CPU scheduling.");
+
+        System.out.println("\n6. Cancel Case - cancel middle item P2");
+        List<Process> queue = List.of(
+                new Process("P1", 0, 4), new Process("P2", 0, 2), new Process("P3", 0, 5));
+        List<Process> cancelled = QueueOperations.cancel(queue, "P2");
+        System.out.println("Before: " + queue);
+        System.out.println("After cancelling P2: " + cancelled);
+        System.out.println("Cancel non-existing P99: " + QueueOperations.cancel(queue, "P99"));
     }
 
     private static void runTest(String label, List<Process> processes) {
